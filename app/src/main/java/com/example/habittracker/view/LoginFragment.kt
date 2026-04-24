@@ -31,8 +31,6 @@ class LoginFragment : Fragment() {
             val user = username.text.toString()
             val pass = password.text.toString()
 
-            Toast.makeText(requireContext(), "$user - $pass", Toast.LENGTH_SHORT).show()
-
             if (user == "student" && pass == "123") {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_loginFragment_to_dashboardFragment)
