@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habittracker.R
+import com.example.habittracker.model.Habit
 
 class HabitAdapter(
     private val habitList: ArrayList<Habit>

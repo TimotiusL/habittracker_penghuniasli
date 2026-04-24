@@ -2,6 +2,7 @@ package com.example.habittracker.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.habittracker.model.Habit
 
 class HabitViewModel : ViewModel() {
 
