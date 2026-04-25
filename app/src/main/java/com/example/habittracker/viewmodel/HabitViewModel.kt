@@ -6,10 +6,10 @@ import com.example.habittracker.model.Habit
 
 class HabitViewModel : ViewModel() {
 
-    val habitList = MutableLiveData<ArrayList<Habit>>()
+    val habitList = MutableLiveData<ArrayList<Habit>>(ArrayList())
 
     fun addHabit(habit: Habit) {
-        val list = habitList.value ?: ArrayList()
+        val list = habitList.value!!
         list.add(habit)
         habitList.value = list
     }
