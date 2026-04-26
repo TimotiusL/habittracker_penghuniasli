@@ -1,16 +1,21 @@
 package com.example.habittracker.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import com.example.habittracker.data.HabitRepository
 import com.example.habittracker.model.Habit
 
-class HabitViewModel : ViewModel() {
+class HabitViewModel(application: Application) : AndroidViewModel(application) {
 
-    val habitList = MutableLiveData<ArrayList<Habit>>(ArrayList())
+    private val repository = HabitRepository.getInstance(application)
+    val habitList: LiveData<ArrayList<Habit>> = repository.habitList
 
     fun addHabit(habit: Habit) {
-        val list = habitList.value!!
-        list.add(habit)
-        habitList.value = list
+        repository.addHabit(habit)
+    }
+
+    fun updateProgress(habitToUpdate: Habit, newProgress: Int) {
+        repository.updateProgress(habitToUpdate, newProgress)
     }
 }
