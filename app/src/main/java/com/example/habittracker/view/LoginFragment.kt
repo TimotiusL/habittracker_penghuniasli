@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.habittracker.R
+import androidx.navigation.findNavController
 
 class LoginFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class LoginFragment : Fragment() {
             val pass = password.text.toString()
 
             if (user == "student" && pass == "123") {
-                Navigation.findNavController(view)
+                view.findNavController()
                     .navigate(R.id.action_loginFragment_to_dashboardFragment)
             } else {
                 Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()

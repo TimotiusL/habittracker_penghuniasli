@@ -2,6 +2,8 @@ package com.example.habittracker.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,19 +25,24 @@ class AddHabitFragment : Fragment(R.layout.fragment_add_habit) {
         val desc = view.findViewById<TextInputEditText>(R.id.etDescription)
         val goal = view.findViewById<TextInputEditText>(R.id.etGoal)
         val unit = view.findViewById<TextInputEditText>(R.id.etUnit)
+        val actvSelectIcon = view.findViewById<AutoCompleteTextView>(R.id.actvSelectIcon)
         val btnCreate = view.findViewById<MaterialButton>(R.id.btnCreateHabit)
+
+        setupIconDropdown(actvSelectIcon)
 
         btnCreate.setOnClickListener {
 
-            val habitName = name.text.toString()
-            val habitDesc = desc.text.toString()
-            val habitGoal = goal.text.toString()
-            val habitUnit = unit.text.toString()
+            val habitName = name.text.toString().trim()
+            val habitDesc = desc.text.toString().trim()
+            val habitGoal = goal.text.toString().trim()
+            val habitUnit = unit.text.toString().trim()
+            val selectedIcon = actvSelectIcon.text.toString()
 
             if (habitName.isEmpty() ||
                 habitDesc.isEmpty() ||
                 habitGoal.isEmpty() ||
-                habitUnit.isEmpty()
+                habitUnit.isEmpty() ||
+                selectedIcon.isEmpty()
             ) {
                 Toast.makeText(requireContext(),
                     "All fields must be filled",
@@ -43,13 +50,15 @@ class AddHabitFragment : Fragment(R.layout.fragment_add_habit) {
                 return@setOnClickListener
             }
 
+            val iconRes = getIconResource(selectedIcon)
+
             val habit = Habit(
-                habitName,
-                habitDesc,
-                habitGoal.toInt(),
-                0,
-                habitUnit,
-                R.drawable.ic_launcher_foreground
+                name = habitName,
+                description = habitDesc,
+                goal = habitGoal.toInt(),
+                progress = 0,
+                unit = habitUnit,
+                icon = iconRes
             )
 
             habitViewModel.addHabit(habit)
@@ -59,7 +68,33 @@ class AddHabitFragment : Fragment(R.layout.fragment_add_habit) {
                 Toast.LENGTH_SHORT).show()
 
             Navigation.findNavController(view)
-               .navigate(R.id.action_addHabitFragment_to_dashboardFragment)
+                .navigate(R.id.action_addHabitFragment_to_dashboardFragment)
+        }
+    }
+
+    private fun setupIconDropdown(actvSelectIcon: AutoCompleteTextView) {
+        val iconOptions = listOf("Water", "Walking", "Praying", "Sleeping", "Eating", "Exercise", "Reading")
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            iconOptions
+        )
+
+        actvSelectIcon.setAdapter(adapter)
+        actvSelectIcon.setText(iconOptions[0], false)
+    }
+
+    private fun getIconResource(iconName: String): Int {
+        return when (iconName.lowercase()) {
+            "water" -> R.drawable.water_drop
+            "walking" -> R.drawable.walking
+            "praying" -> R.drawable.pray
+            "sleeping" -> R.drawable.sleep
+            "eating" -> R.drawable.food
+            "exercise" -> R.drawable.exercise
+            "reading" -> R.drawable.book
+            else -> R.drawable.water_drop
         }
     }
 }
