@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="form"
-            type="com.example.habittracker.viewmodel.EditHabitFormViewModel" />
-
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -76,7 +64,6 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etHabitName"
-                            android:text="@={form.habitName}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Habit Name *"/>
@@ -90,7 +77,6 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etDescription"
-                            android:text="@={form.description}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Short Description *"
@@ -106,7 +92,6 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etGoal"
-                            android:text="@={form.goal}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Goal *"
@@ -130,7 +115,6 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etUnit"
-                            android:text="@={form.unit}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Unit *"/>
@@ -189,6 +173,4 @@
         android:textStyle="bold"
         app:cornerRadius="0dp" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</layout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
