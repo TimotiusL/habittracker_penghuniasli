@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.habittracker.R
 import com.example.habittracker.data.SessionManager
-import com.example.habittracker.data.local.AppDatabase
+import com.example.habittracker.model.local.AppDatabase
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -31,7 +31,6 @@ class LoginFragment : Fragment() {
 
         sessionManager = SessionManager(requireContext())
 
-        // Bonus: jika sudah pernah login sebelumnya, auto masuk ke Dashboard
         if (sessionManager.isLoggedIn()) {
             findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
             return
@@ -50,10 +49,19 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Query informasi login ke tabel user secara lokal (Room)
             lifecycleScope.launch {
                 val userDao = AppDatabase.getInstance(requireContext()).userDao()
+                if (userDao.countUsers() == 0) {
+                    userDao.insertUser(
+                        com.example.habittracker.model.User(
+                            username = "student",
+                            password = "123"
+                        )
+                    )
+                }
                 val result = userDao.login(user, pass)
+
+                Toast.makeText(requireContext(), result.toString(), Toast.LENGTH_LONG).show()
 
                 if (result != null) {
                     sessionManager.saveSession(result.username)

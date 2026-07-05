@@ -9,6 +9,10 @@ android {
     namespace = "com.example.habittracker"
     compileSdk = 36
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.habittracker"
         minSdk = 26

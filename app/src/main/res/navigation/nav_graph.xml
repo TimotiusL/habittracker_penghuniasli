@@ -23,6 +23,9 @@
             android:id="@+id/action_dashboardFragment_to_addHabitFragment"
             app:destination="@id/addHabitFragment" />
         <action
+            android:id="@+id/action_dashboardFragment_to_editHabitFragment"
+            app:destination="@id/editHabitFragment" />
+        <action
             android:id="@+id/action_dashboardFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/dashboardFragment"
@@ -38,6 +41,17 @@
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/dashboardFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editHabitFragment"
+        android:name="com.example.habittracker.view.EditHabitFragment"
+        android:label="Edit Habit">
+
+        <argument
+            android:name="habitId"
+            app:argType="integer"/>
+
     </fragment>
 
 </navigation>

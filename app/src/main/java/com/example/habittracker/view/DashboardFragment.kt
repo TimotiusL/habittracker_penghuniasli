@@ -58,17 +58,23 @@ class DashboardFragment : Fragment() {
         val emptyList = ArrayList<Habit>()
         adapter = HabitAdapter(
             habitList = emptyList,
-            onIncrementClick = { habit, position ->
-                val newProgress = habit.progress + 1
-                if (newProgress <= habit.goal) {
-                    habitViewModel.updateProgress(habit, newProgress)
+            onIncrementClick = { habit, _ ->
+                if (habit.progress < habit.goal) {
+                    val updatedHabit = habit.copy(progress = habit.progress + 1)
+                    habitViewModel.updateHabit(updatedHabit)
                 }
             },
-            onDecrementClick = { habit, position ->
-                val newProgress = habit.progress - 1
-                if (newProgress >= 0) {
-                    habitViewModel.updateProgress(habit, newProgress)
+            onDecrementClick = { habit, _ ->
+                if (habit.progress > 0) {
+                    val updatedHabit = habit.copy(progress = habit.progress - 1)
+                    habitViewModel.updateHabit(updatedHabit)
                 }
+            },
+            onTitleClick = { habit ->
+                val action =
+                    DashboardFragmentDirections
+                        .actionDashboardFragmentToEditHabitFragment(habit.id)
+                findNavController().navigate(action)
             }
         )
         rvHabits.layoutManager = LinearLayoutManager(requireContext())

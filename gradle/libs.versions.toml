@@ -12,9 +12,10 @@ constraintlayout = "2.2.1"
 navigationFragmentKtx = "2.9.8"
 navigationUiKtx = "2.9.8"
 firebaseCrashlyticsBuildtools = "3.0.7"
-room = "2.6.1"
+room = "2.7.0-alpha01"
 lifecycleRuntimeKtx = "2.8.7"
 navigation = "2.9.8"
+ksp = "2.0.21-1.0.25"
 
 [libraries]
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -38,4 +39,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
-
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

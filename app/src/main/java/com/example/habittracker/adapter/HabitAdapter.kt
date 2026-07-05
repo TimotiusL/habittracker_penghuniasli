@@ -14,7 +14,8 @@ import com.example.habittracker.model.Habit
 class HabitAdapter(
     private val habitList: ArrayList<Habit>,
     private val onIncrementClick: (Habit, Int) -> Unit,
-    private val onDecrementClick: (Habit, Int) -> Unit
+    private val onDecrementClick: (Habit, Int) -> Unit,
+    private val onTitleClick: (Habit) -> Unit
 ) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,6 +45,9 @@ class HabitAdapter(
 
         holder.apply {
             tvName.text = habit.name
+            tvName.setOnClickListener {
+                onTitleClick(habit)
+            }
             tvDescription.text = habit.description
             tvUnit.text = habit.unit
             ivIcon.setImageResource(habit.icon)

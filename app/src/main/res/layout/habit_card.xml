@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="habit"
+            type="com.example.habittracker.model.Habit" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -39,7 +50,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnMinus"
             app:layout_constraintStart_toEndOf="@+id/ivIcon"
-            app:layout_constraintTop_toTopOf="@+id/ivIcon" />
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            android:text="@{habit.name}"/>
 
         <TextView
             android:id="@+id/tvDescription"
@@ -49,7 +61,8 @@
             android:textColor="@android:color/darker_gray"
             app:layout_constraintEnd_toEndOf="@+id/tvName"
             app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:text="@{habit.description}"/>
 
         <TextView
             android:id="@+id/tvUnit"
@@ -58,7 +71,8 @@
             android:textSize="12sp"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="@+id/tvDescription"
-            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+            android:text="@{habit.unit}"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -68,7 +82,9 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@+id/tvUnit" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUnit"
+            android:max="@{habit.goal}"
+            android:progress="@{habit.progress}"/>
 
         <TextView
             android:id="@+id/tvProgress"
@@ -120,4 +136,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+</layout>
