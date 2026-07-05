@@ -1,32 +1,52 @@
 package com.example.habittracker.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.habittracker.R
+import com.example.habittracker.databinding.FragmentEditHabitBinding
+import com.example.habittracker.viewmodel.EditHabitFormViewModel
 import com.example.habittracker.viewmodel.HabitViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
-class EditHabitFragment : Fragment(R.layout.fragment_edit_habit) {
+class EditHabitFragment : Fragment() {
+    private lateinit var binding: FragmentEditHabitBinding
 
+    private val formViewModel: EditHabitFormViewModel by viewModels()
     private val viewModel: HabitViewModel by activityViewModels()
 
     private val args: EditHabitFragmentArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_edit_habit,
+            container,
+            false
+        )
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.form = formViewModel
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val habitId = args.habitId
-        val etName = view.findViewById<TextInputEditText>(R.id.etHabitName)
-        val etDescription = view.findViewById<TextInputEditText>(R.id.etDescription)
-        val etGoal = view.findViewById<TextInputEditText>(R.id.etGoal)
-        val etUnit = view.findViewById<TextInputEditText>(R.id.etUnit)
-        val actvIcon = view.findViewById<AutoCompleteTextView>(R.id.actvSelectIcon)
+        val actvIcon = binding.actvSelectIcon
         val iconList = arrayOf(
             "Water",
             "Walking",
@@ -49,10 +69,10 @@ class EditHabitFragment : Fragment(R.layout.fragment_edit_habit) {
         viewModel.getHabitById(habitId)
             .observe(viewLifecycleOwner) { habit ->
 
-                etName.setText(habit.name)
-                etDescription.setText(habit.description)
-                etGoal.setText(habit.goal.toString())
-                etUnit.setText(habit.unit)
+                formViewModel.habitName.value = habit.name
+                formViewModel.description.value = habit.description
+                formViewModel.goal.value = habit.goal.toString()
+                formViewModel.unit.value = habit.unit
 
                 actvIcon.setText(
                     getIconName(habit.icon),
@@ -61,10 +81,10 @@ class EditHabitFragment : Fragment(R.layout.fragment_edit_habit) {
 
                 btnUpdate.setOnClickListener {
                     val updatedHabit = habit.copy(
-                        name = etName.text.toString(),
-                        description = etDescription.text.toString(),
-                        goal = etGoal.text.toString().toIntOrNull() ?: 0,
-                        unit = etUnit.text.toString(),
+                        name = formViewModel.habitName.value ?: "",
+                        description = formViewModel.description.value ?: "",
+                        goal = formViewModel.goal.value?.toIntOrNull() ?: 0,
+                        unit = formViewModel.unit.value ?: "",
                         icon = getIconResource(actvIcon.text.toString())
                     )
                     viewModel.updateHabit(updatedHabit)
